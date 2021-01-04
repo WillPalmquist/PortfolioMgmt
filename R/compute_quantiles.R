@@ -22,8 +22,8 @@ compute_quantiles <- function(
   n = ncol(data)
   nperiods = nrow(data)
 
-  data = coredata(ifna(data,NA))
-  next.month.ret = coredata(ifna(next.month.ret,NA))
+  data = zoo::coredata(SIT::ifna(data,NA))
+  next.month.ret = zoo::coredata(SIT::ifna(next.month.ret,NA))
 
   temp = matrix(NA, nperiods, n.quantiles)
   hist.factor.quantiles = hist.ret.quantiles = temp
@@ -39,7 +39,7 @@ compute_quantiles <- function(
     ret = next.month.ret[t,]
 
     ranking[t,] = rank(-factor, na.last = 'keep','first')
-    t.ranking = ceiling(n.quantiles * ranking[t,] / count(factor))
+    t.ranking = ceiling(n.quantiles * ranking[t,] / SIT::count(factor))
 
     quantiles[t,] = t.ranking
     weights[t,] = 1/tapply(rep(1,n), t.ranking, sum)[t.ranking]
@@ -50,9 +50,9 @@ compute_quantiles <- function(
 
   # create plot
   if(plot) {
-    par(mar=c(4,4,2,1))
+    graphics::par(mar=c(4,4,2,1))
     temp = 100*apply(hist.ret.quantiles,2,mean,na.rm=T)
-    barplot(temp, names.arg=paste(1:n.quantiles), ylab='%',
+    graphics::barplot(temp, names.arg=paste(1:n.quantiles), ylab='%',
             main=paste(smain, ', spread =',round(temp[1]-temp[n.quantiles],2), '%'))
   }
 

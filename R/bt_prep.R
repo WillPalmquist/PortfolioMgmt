@@ -23,23 +23,23 @@ bt_prep <- function(
   # setup
   if( !exists('symbolnames', b, inherits = F) ) b$symbolnames = ls(b)
   symbolnames = b$symbolnames
-  nsymbols = len(symbolnames)
+  nsymbols = SIT::len(symbolnames)
 
   if( nsymbols > 1 ) {
     # merge
-    out = bt.merge(b, align, dates)
+    out = SIT::bt.merge(b, align, dates)
 
     for( i in 1:nsymbols ) {
-      temp = coredata( b[[ symbolnames[i] ]] )[ out$date.map[,i],, drop = FALSE]
-      b[[ symbolnames[i] ]] = iif(basic, temp, make.xts( temp, out$all.dates))
+      temp = zoo::coredata( b[[ symbolnames[i] ]] )[ out$date.map[,i],, drop = FALSE]
+      b[[ symbolnames[i] ]] = SIT::iif(basic, temp, SIT::make.xts( temp, out$all.dates))
 
       # fill gaps logic
-      map.col = find.names('Close,Volume,Open,High,Low,Adjusted', b[[ symbolnames[i] ]])
+      map.col = SIT::find.names('Close,Volume,Open,High,Low,Adjusted', b[[ symbolnames[i] ]])
       if(fill.gaps & !is.na(map.col$Close)) {
-        close = coredata(b[[ symbolnames[i] ]][,map.col$Close])
-        n = len(close)
+        close = zoo::coredata(b[[ symbolnames[i] ]][,map.col$Close])
+        n = SIT::len(close)
         last.n = max(which(!is.na(close)))
-        close = ifna.prev(close)
+        close = SIT::ifna.prev(close)
         if(last.n + 5 < n) close[last.n : n] = NA
         b[[ symbolnames[i] ]][, map.col$Close] = close
         index = !is.na(close)
@@ -50,7 +50,7 @@ bt_prep <- function(
         }
 
         #for(j in colnames(b[[ symbolnames[i] ]])) {
-        for(field in spl('Open,High,Low')) {
+        for(field in SIT::spl('Open,High,Low')) {
           j = map.col[[field]]
           if(!is.null(j)) {
             index1 = is.na(b[[ symbolnames[i] ]][,j]) & index
@@ -59,7 +59,7 @@ bt_prep <- function(
 
         j = map.col$Adjusted
         if(!is.null(j)) {
-          b[[ symbolnames[i] ]][index, j] = ifna.prev(b[[ symbolnames[i] ]][index, j])
+          b[[ symbolnames[i] ]][index, j] = SIT::ifna.prev(b[[ symbolnames[i] ]][index, j])
         }
 
 
@@ -70,17 +70,17 @@ bt_prep <- function(
     }
   } else {
     if(!is.null(dates)) b[[ symbolnames[1] ]] = b[[ symbolnames[1] ]][dates,]
-    out = list(all.dates = index.xts(b[[ symbolnames[1] ]]) )
-    if(basic) b[[ symbolnames[1] ]] = coredata( b[[ symbolnames[1] ]] )
+    out = list(all.dates = SIT::index.xts(b[[ symbolnames[1] ]]) )
+    if(basic) b[[ symbolnames[1] ]] = zoo::coredata( b[[ symbolnames[1] ]] )
   }
 
   # dates
   b$dates = out$all.dates
 
   # empty matrix
-  dummy.mat = matrix(double(), len(out$all.dates), nsymbols)
+  dummy.mat = matrix(double(), SIT::len(out$all.dates), nsymbols)
   colnames(dummy.mat) = symbolnames
-  if(!basic) dummy.mat = make.xts(dummy.mat, out$all.dates)
+  if(!basic) dummy.mat = SIT::make.xts(dummy.mat, out$all.dates)
 
   # weight matrix holds signal and weight information
   b$weight = dummy.mat
@@ -90,8 +90,8 @@ bt_prep <- function(
 
   # populate prices matrix
   for( i in 1:nsymbols ) {
-    if( has.Cl( b[[ symbolnames[i] ]] ) ) {
-      dummy.mat[,i] = Cl( b[[ symbolnames[i] ]] );
+    if( quantmod::has.Cl( b[[ symbolnames[i] ]] ) ) {
+      dummy.mat[,i] = quantmod::Cl( b[[ symbolnames[i] ]] );
     }
   }
   b$prices = dummy.mat

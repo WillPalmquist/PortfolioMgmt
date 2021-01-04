@@ -15,14 +15,14 @@ bt_fillmonths <- function(
   metric	# user specified financial metric
 )
 {
-  out = xts()
+  out = xts::xts()
   symbolnames = b$symbolnames
   nsymbols = length(symbolnames)
   for( i in 1:nsymbols) {
     tick = symbolnames[i]
     temp = b[[tick]][,metric]
     l = cumsum(!is.na(temp))
-    x = c(NA, temp[!is.na(temp)])[replace(l, ave(l, l, FUN = seq_along) > 13, 0) + 1]
+    x = c(NA, temp[!is.na(temp)])[replace(l, stats::ave(l, l, FUN = seq_along) > 13, 0) + 1]
     temp[,1] = x
     names(temp) = tick
     out = cbind(out,temp)
