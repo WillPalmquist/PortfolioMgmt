@@ -7,10 +7,10 @@
 date_fund_data(data)
 }
 \arguments{
-\item{data}{}
+\item{data}{fundamental data stored in environment variable}
 }
 \value{
-
+stored date object
 }
 \description{
 Date function for fundamental data
