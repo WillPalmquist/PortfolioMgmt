@@ -1,0 +1,20 @@
+Package: PortfolioMgmt
+Type: Package
+Title: Helper Functions for Multiple-Factor Portfolio Backtesting
+Version: 0.1.0
+Authors@R: person("Will", "Palmquist", email = "Will.Palmquist@du.edu", role = "cre", comment = c(ORCID = "0000-0002-6100-0923"))
+Maintainer: Will Palmquist <Will.Palmquist@du.edu>
+Description: This package contains functions to assist with portfolio backtests in R. 
+    Many functions are modified from the Systematic Investor Toolbox (SIT) for compatability
+    with Standard & Poor's Compustat database. These functions are to be used alongside SIT
+    functions, mainly for multiple-factor backtesting. 
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.1.1
+Imports: 
+    xts,
+    dplyr,
+    SIT
+URL: 
+BugReports: 
