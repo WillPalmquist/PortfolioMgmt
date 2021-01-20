@@ -2,5 +2,6 @@
 
 export(bt_fillmonths)
 export(bt_prep)
+export(clarifi_prep)
 export(compute_quantiles)
 export(date_fund_data)
