@@ -12,9 +12,11 @@
 #' @examples
 bt_fillmonths <- function(
   b,			# environment with symbols time series
-  metric	# user specified financial metric
+  metric, # user specified financial metric
+  lookback = 12
 )
 {
+  y = lookback + 1
   out = xts::xts()
   symbolnames = b$symbolnames
   nsymbols = length(symbolnames)
@@ -22,7 +24,7 @@ bt_fillmonths <- function(
     tick = symbolnames[i]
     temp = b[[tick]][,metric]
     l = cumsum(!is.na(temp))
-    x = c(NA, temp[!is.na(temp)])[replace(l, stats::ave(l, l, FUN = seq_along) > 13, 0) + 1]
+    x = c(NA, temp[!is.na(temp)])[replace(l, stats::ave(l, l, FUN = seq_along) > y, 0) + 1]
     temp[,1] = x
     names(temp) = tick
     out = cbind(out,temp)
