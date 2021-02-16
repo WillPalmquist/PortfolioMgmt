@@ -13,7 +13,7 @@
 bt_fillmonths <- function(
   b,			# environment with symbols time series
   metric, # user specified financial metric
-  lookback = 12
+  lookback = 12 # specify the lookback period
 )
 {
   y = lookback + 1

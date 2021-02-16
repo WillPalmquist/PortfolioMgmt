@@ -4,7 +4,7 @@
 \alias{bt_fillmonths}
 \title{Month Fill function updated for Clarifi Data}
 \usage{
-bt_fillmonths(b, metric)
+bt_fillmonths(b, metric, lookback = 12)
 }
 \arguments{
 \item{b}{environment with symbols time series}
