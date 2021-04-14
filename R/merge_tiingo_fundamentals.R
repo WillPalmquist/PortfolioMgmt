@@ -2,7 +2,7 @@
 #'
 #' @param data a data.frame of company financial statements retrieved from `riingo_fundamental_statements()`
 #'
-#' @return data.frame of quarterly fundamentals
+#' @return data.frame of combined quarterly fundamentals
 #' @export
 #'
 #' @examples

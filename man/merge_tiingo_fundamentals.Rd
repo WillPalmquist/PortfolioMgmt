@@ -10,7 +10,7 @@ merge_tiingo_fundamentals(data)
 \item{data}{a data.frame of company financial statements retrieved from `riingo_fundamental_statements()`}
 }
 \value{
-data.frame of quarterly fundamentals
+data.frame of combined quarterly fundamentals
 }
 \description{
 Title
