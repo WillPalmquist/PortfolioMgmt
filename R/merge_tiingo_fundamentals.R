@@ -31,5 +31,6 @@ merge_tiingo_fundamentals <- function(data){
   #reorder rows
   x <- c("ticker","quarter_end_date","quarter")
   df_all <- rbind(df_all[x,], df_all[!rownames(df)%in%x,])
+  df_all <- df_all[!rownames(df_all) %in% c("ticker1","quarter1","quarter_end_date1"),]
   return(df_all)
 }
