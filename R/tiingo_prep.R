@@ -34,6 +34,7 @@ tiingo_prep <- function(data, #data from tiingo
   x <- c("quarter_end_date","ticker","quarterly indicator")
   df_all <- rbind(df_all[x,], df_all[!rownames(df)%in%x,])
   df_all <- df_all[!rownames(df_all) %in% c("ticker1","quarterly indicator1","quarter_end_date1"),]
+  df_all <- df_all[,order(ncol(df_all):1)]
   return(df_all)
   }
   else if (type == "price") {
